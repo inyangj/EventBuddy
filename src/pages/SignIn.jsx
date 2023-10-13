@@ -56,15 +56,15 @@ const Signin = () => {
 
     const geoLocator = new GeoLocationValidator();
     const validationPoint = {
-      latitude:  6.97576,
-      longitude:   4.85558,
+      latitude:   4.85533,
+      longitude:    6.97579,
     };
 
     const userCoordinates = coordinates;
     console.log(userCoordinates)
 
     setLoading(true);
-    const validated = await geoLocator.validateLocation(userCoordinates, validationPoint, 10);
+    const validated = await geoLocator.validateLocation(userCoordinates, validationPoint, 0);
 
     console.log(validated.result)
 
