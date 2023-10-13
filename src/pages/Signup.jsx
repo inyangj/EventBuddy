@@ -68,7 +68,7 @@ const Signup = () => {
         
         setTimeout(() => {
           window.location.href = "/SignIn";
-        }, 2000);
+        }, 1000);
       } else {
         
         setMessage(response.data.message || "Registration failed.");
