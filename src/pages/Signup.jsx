@@ -4,8 +4,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from "@fortawesome/free-regular-svg-icons";
 import { faEyeSlash } from "@fortawesome/free-regular-svg-icons";
 import axios from "axios";
+import {useNavigate} from "react-router-dom"
 
 const Signup = () => {
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -66,9 +68,7 @@ const Signup = () => {
        
         setMessage("Registration successful!");
         
-        setTimeout(() => {
-          window.location.href = "/SignIn";
-        }, 1000);
+        navigate('/SignIn')
       } else {
         
         setMessage(response.data.message || "Registration failed.");

@@ -7,8 +7,10 @@ import { faEyeSlash } from "@fortawesome/free-regular-svg-icons";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { GeoLocationValidator } from "geolocation-validator";
+import {useNavigate} from "react-router-dom"
 
 const Signin = () => {
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -79,9 +81,7 @@ const Signin = () => {
         if (response.status === 200) {
           toast.success("Sign in successful!");
         
-          setTimeout(() => {
-            window.location.href = "/Dashboard";
-          }, 2000);
+          navigate('/Dashboard')
         } else {
          
           toast.error(response.data.message || "Sign in failed.");
