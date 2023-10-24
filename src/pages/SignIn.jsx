@@ -91,7 +91,7 @@ const Signin = () => {
             <input
               type={showPassword ? "text" : "password"}
               value={password}
-              className="outline-none px-2"
+              className="outline-none px-2 w-full"
               onChange={(e) => {
                 setPassword(e.target.value);
               }}
