@@ -14,46 +14,18 @@ const Signup = () => {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
-  const [passwordRequirements, setPasswordRequirements] = useState({
-    length: false,
-    uppercase: false,
-    lowercase: false,
-    number: false,
-    specialChar: false,
-  });
+
 
   const toggleVisibility = () => {
     setShowPassword(!showPassword);
   };
 
-  const handlePasswordChange = (e) => {
-    const newPassword = e.target.value;
-    setPassword(newPassword);
 
-    // Validate password requirements
-    const requirements = {
-      length: newPassword.length >= 8,
-      uppercase: /[A-Z]/.test(newPassword),
-      lowercase: /[a-z]/.test(newPassword),
-      number: /\d/.test(newPassword),
-      specialChar: /[!@#$%^&*()_+{}\[\]:;<>,.?~\\-]/.test(newPassword),
-    };
-
-    setPasswordRequirements(requirements);
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Check if all password requirements are met
-    const allRequirementsMet = Object.values(passwordRequirements).every(
-      (requirement) => requirement
-    );
-
-    if (!allRequirementsMet) {
-      setMessage("Password requirements not met.");
-      return;
-    }
+    
 
     setLoading(true);
 
@@ -133,8 +105,10 @@ const Signup = () => {
             <input
               type={showPassword ? "text" : "password"}
               value={password}
-              className="outline-none px-2"
-              onChange={handlePasswordChange}
+              className="outline-none px-2 w-full"
+              onChange={(e) => {
+                setPassword(e.target.value);
+              }}
               required
             />
             {showPassword ? (
@@ -144,24 +118,7 @@ const Signup = () => {
             )}
           </div>
 
-          <label>Password Requirements:</label>
-          <ul>
-            <li>
-              {passwordRequirements.length ? "✓" : ""} At least 8 characters
-            </li>
-            <li>
-              {passwordRequirements.uppercase ? "✓" : ""} At least one uppercase letter
-            </li>
-            <li>
-              {passwordRequirements.lowercase ? "✓" : ""} At least one lowercase letter
-            </li>
-            <li>
-              {passwordRequirements.number ? "✓" : ""} At least one number
-            </li>
-            <li>
-              {passwordRequirements.specialChar ? "✓" : ""} At least one special character
-            </li>
-          </ul>
+          
 
           <button
             className="bg-[#1E1E1E] text-white py-[6px] px-[24px] rounded-lg block mx-auto my-[44px]"
