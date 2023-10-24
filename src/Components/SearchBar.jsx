@@ -1,6 +1,14 @@
- 
+
+ import CreateEvent from "./modals/CreateEvent";
+import { useModal } from "../contexts/ModalContext";
 
 const SearchBar = () => {
+    const {
+        createEventModal,
+        openCreateEventModal,
+      } = useModal();
+
+ 
 
     return(
         <div className='flex items-center justify-between p-[34px]'>
@@ -12,11 +20,12 @@ const SearchBar = () => {
             </div>
             <div className='flex gap-10 items-center'>
             <img src="/images/bell.png" alt="icon" />
-            <div className='flex gap-2 bg-[#1E1E1E] text-white rounded-xl p-4 items-center'>
+            <div onClick={openCreateEventModal} className='flex gap-2 bg-[#1E1E1E] text-white rounded-xl p-4 items-center'>
                 <img src="/images/add.png" alt="icon" />
-                <p>Create New Event</p>
+                <button >Create New Event</button>
             </div>
             </div>
+            {createEventModal && <CreateEvent />}
         </div>
     )
 }

@@ -6,8 +6,8 @@ import { faEye } from "@fortawesome/free-regular-svg-icons";
 import { faEyeSlash } from "@fortawesome/free-regular-svg-icons";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { GeoLocationValidator } from "geolocation-validator";
-import {useNavigate} from "react-router-dom"
+
+import { useNavigate, NavLink } from "react-router-dom";
 
 const Signin = () => {
   const navigate = useNavigate();
@@ -15,37 +15,6 @@ const Signin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const [coordinates, setCoordinates] = useState({
-    latitude: null,
-    longitude: null,
-  });
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-
-    if ("geolocation" in navigator) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-         
-          const { latitude, longitude } = position.coords;
-          const main = { latitude, 
-            longitude };
-            setCoordinates(main)
-            console.log(coordinates)
-          console.log(main);
-          console.log(position.coords);
-        },
-        (error) => {
-       
-          setError(error.message);
-          alert(error)
-        }
-      );
-    } else {
-      setError("Geolocation is not available in your browser.");
-      alert(error)
-    }
-  }, []);
 
   const toggleVisibility = () => {
     setShowPassword(!showPassword);
@@ -54,42 +23,24 @@ const Signin = () => {
   const handleSignIn = async (e) => {
     e.preventDefault();
 
-    const geoLocator = new GeoLocationValidator();
-    const validationPoint = {
-      latitude: 4.8472325,
-      longitude: 6.9746145,
-    };
-
-    const userCoordinates = coordinates;
-    console.log(userCoordinates)
-
     setLoading(true);
-    const validated = await geoLocator.validateLocation(userCoordinates, validationPoint, 0);
-
-    console.log(validated.result)
 
     try {
-      if (validated.result != false) {
-        const response = await axios.post(
-          "https://crm-ai.onrender.com/api/v1/users/login",
-          {
-            email,
-            password,
-          }
-        );console.log(response)
-
-        if (response.status === 200) {
-          toast.success("Sign in successful!");
-        
-          navigate('/Dashboard')
-        } else {
-         
-          toast.error(response.data.message || "Sign in failed.");
+      const response = await axios.post(
+        "https://crm-ai.onrender.com/api/v1/users/login",
+        {
+          email,
+          password,
         }
+      );
+      console.log(response);
+
+      if (response.status === 200) {
+        toast.success("Sign in successful!");
+        localStorage.setItem("userData", JSON.stringify(response.data));
+        navigate("/dashboard");
       } else {
-        setError(validated.message)
-        alert(error)
-        console.log(validated.message);
+        toast.error(response.data.message || "Sign in failed.");
       }
     } catch (error) {
       toast.error("An error occurred while signing in.");
@@ -163,9 +114,9 @@ const Signin = () => {
 
         <p className="text-[#5D5D5D] text-center">
           Don't have an account?{" "}
-          <a href="/" className="text-[#696D73]">
+          <NavLink to={"/signup"} className="text-[#696D73]">
             Sign Up
-          </a>
+          </NavLink>
         </p>
       </div>
     </div>

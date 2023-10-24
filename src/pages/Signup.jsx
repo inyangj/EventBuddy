@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from "@fortawesome/free-regular-svg-icons";
 import { faEyeSlash } from "@fortawesome/free-regular-svg-icons";
 import axios from "axios";
-import {useNavigate} from "react-router-dom"
+import {useNavigate, NavLink} from "react-router-dom"
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -68,7 +68,7 @@ const Signup = () => {
        
         setMessage("Registration successful!");
         
-        navigate('/SignIn')
+        navigate('/')
       } else {
         
         setMessage(response.data.message || "Registration failed.");
@@ -172,9 +172,9 @@ const Signup = () => {
           </button>
           <p className="text-[#5D5D5D] text-center">
             Already have an account?{" "}
-            <a href="/SignIn" className="text-[#696D73]">
-              Sign in
-            </a>
+            <NavLink to={'/'} className="text-[#696D73]">
+            Log in
+          </NavLink>
           </p>
           <p className="text-[#5D5D5D] text-center">{message}</p>
         </form>
