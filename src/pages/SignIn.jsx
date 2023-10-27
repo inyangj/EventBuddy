@@ -33,7 +33,7 @@ const Signin = () => {
           password,
         }
       );
-      console.log(response);
+    
 
       if (response.status === 200) {
         toast.success("Sign in successful!");
@@ -42,9 +42,7 @@ const Signin = () => {
       } else {
         toast.error(response.data.message || "Sign in failed.");
       }
-    } catch (error) {
-      toast.error("An error occurred while signing in.");
-    } finally {
+    }  finally {
       setLoading(false);
     }
   };
@@ -120,7 +118,7 @@ const Signin = () => {
         </p>
       </div>
     </div>
-  );
+  )
 };
 
 export default Signin;

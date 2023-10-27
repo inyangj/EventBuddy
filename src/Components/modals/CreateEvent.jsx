@@ -4,17 +4,28 @@ import Button from "../Button";
 import { useModal } from "../../contexts/ModalContext";
 import { createEvent } from "../../utility/DashboardFetch";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useUser } from "../../contexts/UserContext";
+
 
 const CreateEvent = () => {
   const {closeCreateEventModal, openEventSuccessModal} = useModal();
-  const {user} = useUser();
+  const  [id, setId]  = useState("");
   const queryClient = useQueryClient();
   const [title, setTitle] = useState("");
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
   const [location, setLocation] = useState("");
   const [details, setDetails] = useState("");
+
+  useEffect(() => {
+    const userData = JSON.parse(localStorage.getItem("userData"));
+  
+      
+    if (userData) {
+      setId(userData.data.id)
+    } 
+
+    
+  }, []);
   
   
   const {mutate, isPending} = useMutation({
@@ -35,7 +46,7 @@ const CreateEvent = () => {
     
     const eventData = {
       name: title,
-      createdBy: user.data.id,
+      createdBy: id,
       about : details,
       location,
       date: eventDateTime,

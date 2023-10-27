@@ -3,12 +3,12 @@ import Input from "../Input";
 import Button from "../Button";
 import { useModal } from "../../contexts/ModalContext";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useUser } from "../../contexts/UserContext";
+
 import { registerEvent } from "../../utility/DashboardFetch";
 
 const Register = (eventId) => {
   const { closeRegisterModal, openRegSuccess } = useModal();
-  const { user } = useUser();
+  const  [id, setId]  = useState("");
   const queryClient = useQueryClient();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -24,6 +24,17 @@ const Register = (eventId) => {
     },
   });
 
+  useEffect(() => {
+    const userData = JSON.parse(localStorage.getItem("userData"));
+  
+      
+    if (userData) {
+      setId(userData.data.id)
+    } 
+
+    
+  }, []);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -33,7 +44,7 @@ const Register = (eventId) => {
       email,
       phoneNumber,
       isUser: true,
-      user: user.data.id,
+      user: id,
     };
 
     register(registrationData);
